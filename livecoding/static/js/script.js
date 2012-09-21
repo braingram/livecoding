@@ -1,5 +1,10 @@
 /* Author:
 	Gabriel Florit
+   Edits:
+    Brett Graham
+     - removing gist, oauth, libraries other than d3
+     - keeping edit window, svg/html display, live editing & value changing
+     - what about modes, layouts, resolution?
 */
 
 var aigua = (function () {
@@ -14,7 +19,7 @@ var aigua = (function () {
 			if (result) {
 				aigua.resetScreen();
 				aigua.resetUrl();
-				aigua.resetMenu();
+				// aigua.resetMenu();
 			}
 		},
 
@@ -23,6 +28,7 @@ var aigua = (function () {
 			aigua.masterComment(cm, true);
 		},
 
+        /* // no longer needed
 		createPostDataObject: function() {
 
 			var result = {};
@@ -71,16 +77,20 @@ var aigua = (function () {
 
 			return result;
 		},
+        // createPostDataObject*/
 
+        /*
 		getOAuthToken: function() {
 			return token;
 		},
+        */
 
 		getSelectedRange: function(cm) {
 			var range = { from: cm.getCursor(true), to: cm.getCursor(false) };
 			return range;
 		},
-
+        
+        /*
 		getUrlGistId: function() {
 
 			var a = document.createElement('a');
@@ -90,6 +100,7 @@ var aigua = (function () {
 
 			return (gistId.length > 0 && gistId != '!') ? gistId : null;
 		},
+        */
 
 		hidePopup: function() {
 
@@ -109,6 +120,7 @@ var aigua = (function () {
 			return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(value);
 		},
 
+        /*
 		loadGist: function(gistId) {
 
 			aigua.isLoading = true;
@@ -208,7 +220,9 @@ var aigua = (function () {
 			});
 
 		},
+        // loadGist */
 
+        /*
 		logIn: function(oauthToken) {
 			token = oauthToken;
 			localStorage['aigua.token'] = token;
@@ -243,6 +257,7 @@ var aigua = (function () {
 			$('li:contains("logout")').text('login');
 			$('li').filter(function() { return $(this).text() == 'save'; } ).addClass('disabled');
 		},
+        // login/logout */
 
 		masterComment: function(cm, comment) {
 
@@ -397,12 +412,14 @@ var aigua = (function () {
 			aigua.filler.removeClass('filler-edge-right');
 		},
 
+        /* -- removing menu
 		resetMenu: function() {
 
 			var menu = $('#menu');
 			$('ul', menu).hide(); // hide all the dropdowns
 			$('h2', menu).removeClass('hover'); // remove hover class from all the h2's
 		},
+        */
 
 		resetScreen: function() {
 
@@ -425,11 +442,13 @@ var aigua = (function () {
 			aigua.switchMode('html');
 		},
 
+        /* -- I think only used for gist
 		resetUrl: function() {
 			history.pushState(null, null, '!');
 			$('#gist').attr('href', '');
 			$('#gist').html('');
 		},
+        */
 
 		respondToKey: function(cm) {
 
@@ -477,6 +496,7 @@ var aigua = (function () {
 			}
 		},
 
+        /* -- I think this is gist related
 		// TODO: clean up all the code duplication
 		saveAsUser: function() {
 
@@ -526,7 +546,9 @@ var aigua = (function () {
 			});
 
 		},
+        */
 
+        /*
 		saveAnonymously: function() {
 
 			aigua.setToClean();
@@ -554,7 +576,7 @@ var aigua = (function () {
 			}
 
 		},
-
+        */
 		setToClean: function() {
 			$('.dirty').css('visibility', 'hidden');
 		},
@@ -607,12 +629,14 @@ var aigua = (function () {
 			$(aigua.miniColorsSelector).css('top', endCoords.y + aigua.lineHeight);
 		},
 
+        /*
 		showSaveConfirmation: function() {
 			$('.save-confirmation').text('saved at ' + new Date().toLocaleTimeString());
 			$('.save-confirmation').fadeOut(1500, function() {
 				$('#gist').fadeIn(250);
 			});
 		},
+        */
 
 		showSlider: function(cm, cursor, token) {
 
@@ -676,6 +700,7 @@ var aigua = (function () {
 			aigua.ball.offset({top: aigua.filler.offset().top});
 		},
 
+        /*
 		switchLayout: function(choice) {
 
 			var layoutItems = $('.screenLayout');
@@ -686,6 +711,7 @@ var aigua = (function () {
 			aigua.updateScreenLayout();
 			aigua.resetMenu();
 		},
+        */
 
 		switchMode: function(mode, noTab) {
 
@@ -768,6 +794,7 @@ var aigua = (function () {
 			aigua.switchMode('json');
 		},
 
+        /*
 		switchToNextLayout: function() {
 
 			// if we're on the last one, go to the first one
@@ -778,7 +805,7 @@ var aigua = (function () {
 				aigua.switchLayout(aigua.screenLayouts[aigua.currentScreenLayoutIndex + 1]);
 			}
 		},
-
+        
 		switchToPreviousLayout: function() {
 
 			// if we're on the first one, go to the last one
@@ -789,6 +816,7 @@ var aigua = (function () {
 				aigua.switchLayout(aigua.screenLayouts[aigua.currentScreenLayoutIndex - 1]);
 			}
 		},
+        */
 
 		switchResolution: function(resolution) {
 
@@ -907,15 +935,15 @@ var aigua = (function () {
 		isLoading: null,
 		key: null,
 		libraries: [
-			{
+			/*{
 				name: 'crossfilter',
 				obj: 'crossfilter'
-			},
+			}, */
 			{
 				name: 'd3',
 				obj: 'd3'
 			},
-			{
+			/*{
 				name: 'Handlebars',
 				obj: 'Handlebars'
 			},
@@ -934,7 +962,7 @@ var aigua = (function () {
 			{
 				name: 'Underscore',
 				obj: '_'
-			}
+			} */
 		],
 		lineHeight: 19,
 		marker: null,
@@ -1028,7 +1056,7 @@ $(function() {
 			}
 
 			var extraKeys = {};
-			var gistId;
+			//var gistId;
 			aigua.key = {};
 
 			var shortcuts = [];
@@ -1124,12 +1152,14 @@ $(function() {
 							{ shortcut: 'Ctrl + 4', name: 'json'       }
 						]
 					},
+                    /*
 					{
 						section: 'layouts', shortcuts: [
 							{ shortcut: "Ctrl + '", name: 'next layout'     },
 							{ shortcut: 'Ctrl + ;', name: 'previous layout' }
 						]
 					}
+                    */
 				];
 			}
 
@@ -1260,18 +1290,20 @@ $(function() {
 				theme: 'lesser-dark'
 			});
 
+            /*
 			// if token is in localstorage, log in
 			if (localStorage['aigua.token']) {
 				aigua.logIn(localStorage['aigua.token']);
 			} else {
 			// we still call log out to make sure all UI-related elements are set correctly
 				aigua.logOut();
-			}
+			} */
 
 			// try to grab the gist id from the url
 			// e.g. the '3072416' bit in http://livecoding.io/3072416
-			gistId = aigua.getUrlGistId();
+			//gistId = aigua.getUrlGistId();
 
+            /*
 			// is there an id in the url?
 			if (gistId) {
 
@@ -1281,7 +1313,11 @@ $(function() {
 
 				// no gist - load the first example
 				aigua.loadGist($("#menu .item h2:contains('examples') + ul li:first").attr('rel'));
-			}
+			} */
+            // add libraries to dom (just d3 for now)
+            frames[0].livecoding.addJs(_.find(aigua.libraries, function(value) {
+                return value.name == 'd3';
+            }));
 
 			// show the 'click a number' message
 			$('#message').show();
@@ -1432,6 +1468,7 @@ $(function() {
 				$('#modes').append(div);
 			});
 
+            /*
 			// populate screen layout switcher
 			_.each(aigua.screenLayouts, function(layout, index, list) {
 
@@ -1442,7 +1479,9 @@ $(function() {
 
 				$('#menu .item h2:contains("view")').next().prepend(li);
 			});
+            */
 
+            /*
 			// populate libraries dropdown
 			_.each(aigua.libraries, function(value) {
 
@@ -1451,6 +1490,7 @@ $(function() {
 
 				$('#menu .item h2:contains("libraries")').next().append(li);
 			});
+            */
 
 
 			// ----------- event handlers section ----------------------
@@ -1514,6 +1554,7 @@ $(function() {
 				aigua.switchMode($(this).text());
 			});
 
+            /*
 			// handle menu mouseover/mouseout events
 			$('#menu .item h2').on('mouseover', function(e) {
 				var item = $(this).parents('.item');
@@ -1545,7 +1586,7 @@ $(function() {
 			// handle menu mouseover/mouseout events
 			$('#menu .item li').on('mouseout', function(e) {
 				$(this).removeClass('hover');
-			});
+			}); */
 
 			// handle clicking on title
 			$('#header').on('click', function(e) {
@@ -1563,6 +1604,7 @@ $(function() {
 				}
 			});
 
+            /*
 			// handle menu item choices
 			$('#menu .item ul li').on('click', function(e) {
 				e.preventDefault();
@@ -1698,6 +1740,7 @@ $(function() {
 					break;
 				}
 			});
+            // handling menu stuff */
 
 			// close popup
 			$('#popup .close').click(function(e) {
